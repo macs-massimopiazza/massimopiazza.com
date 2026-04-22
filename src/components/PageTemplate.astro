@@ -1,4 +1,5 @@
 ---
+import MainLayout from '../layouts/MainLayout.astro';
 import { getEntry, render } from 'astro:content';
 const siteUrl = import.meta.env.SITE_URL;
 
@@ -14,15 +15,34 @@ if (!entry) {
 const { Content } = await render(entry);
 
 ---
-<html>
-  <head>
-    <title>{entry.data.title}</title>
-    
-    {canonical && <link rel="canonical" href={`${siteUrl}${canonical}`} />}
-    
-  </head>
-  <body>
-    <h1>{entry.data.title}</h1>
-    <Content />
-  </body>
-</html>
+<MainLayout 
+  canonical={canonical}
+  siteUrl={siteUrl}
+  title={entry.data.title}
+  lang={lang}
+>
+  
+  <div class="wrapper">
+    <div class="SX">
+      <h1>{entry.data.title}</h1>
+    </div>
+    <div class="DX">
+      <p>sono un bel Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique libero ipsa dignissimos eos possimus itaque asperiores culpa harum maiores repudiandae nostrum ad enim, voluptate ducimus totam ratione earum vel. Ipsam?</p>
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 5rem 0;
+    .SX {
+      flex-basis: calc(100% / 2);
+    }
+    .DX {
+      flex-basis: calc(100% / 2);
+    }
+  }
+</style>

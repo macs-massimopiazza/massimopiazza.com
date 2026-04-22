@@ -1,0 +1,28 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+const currentLocale = Astro.currentLocale || 'it'; 
+const mainPages = [
+  {
+    name: 'about',
+    path: '/'
+  },
+  {
+    name: 'doing-now',
+    path: '/doing-now'
+  },
+  {
+    name: 'done',
+    path: '/done'
+  },
+];
+---
+
+<header style="display: flex; justify-content: space-between; padding: 20px; border: 1px solid red;">
+  <span>lang switch + theme switch</span>
+  <nav>
+    <div class="menu-links">
+      {mainPages.map(page => <a href={getRelativeLocaleUrl(currentLocale, page.path)}>{page.name}</a>)}
+    </div>
+  </nav>
+  <span>orario</span>
+</header>
