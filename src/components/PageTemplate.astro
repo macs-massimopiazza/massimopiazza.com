@@ -21,6 +21,28 @@ const { Content } = await render(entry);
   title={entry.data.title}
   lang={lang}
 >
-  <h1>{entry.data.title}</h1>
-  <Content />
+  
+  <div class="wrapper">
+    <div class="SX">
+      <h1>{entry.data.title}</h1>
+    </div>
+    <div class="DX">
+      <p>sono un bel Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique libero ipsa dignissimos eos possimus itaque asperiores culpa harum maiores repudiandae nostrum ad enim, voluptate ducimus totam ratione earum vel. Ipsam?</p>
+    </div>
+  </div>
 </MainLayout>
+
+<style>
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 5rem 0;
+    .SX {
+      flex-basis: calc(100% / 2);
+    }
+    .DX {
+      flex-basis: calc(100% / 2);
+    }
+  }
+</style>
