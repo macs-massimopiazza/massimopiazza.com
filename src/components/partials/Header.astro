@@ -1,0 +1,18 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+const currentLocale = Astro.currentLocale; 
+console.log(currentLocale);
+---
+
+<header>
+  <!-- <nav>
+    <a href={getRelativeLocaleUrl(currentLocale, '/')}>Home</a>
+    <a href={getRelativeLocaleUrl(currentLocale, 'about')}>About</a>
+
+    <div class="lang-switcher">
+      <a href="/">IT</a>
+      <a href="/en/">EN</a>
+    </div>
+  </nav> -->
+</header>
