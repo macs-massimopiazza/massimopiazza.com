@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+// import AboutTemplate from '../components/AboutTemplate.astro';
+// import DoneTemplate from '../components/DoneTemplate.astro';
+// import DoingNowTemplate from '../components/DoingNowTemplate.astro';
+import PageTemplate from '../components/PageTemplate.astro'; // Il fallback generico
+
+export async function getStaticPaths() {
+  const entries = await getCollection('pages');
+  
+  const paths = entries.flatMap((entry) => {
+    const [lang, ...slugParts] = entry.id.split('/');
+    const slug = slugParts.join('/');
+    
+    const results = [];
+
+    if (lang === 'it') {
+      results.push({
+        params: { path: slug === 'about' ? undefined : slug },
+        props: { lang, slug }
+      });
+
+      results.push({
+        params: { path: slug === 'about' ? 'it' : `it/${slug}` },
+        props: { lang, slug }
+      });
+    } else {
+      results.push({
+        params: { path: slug === 'about' ? 'en' : `en/${slug}` },
+        props: { lang, slug }
+      });
+    }
+    
+    return results;
+  });
+
+  return paths;
+}
+
+const { lang, slug } = Astro.props;
+
+let canonicalUrl;
+if (lang === 'it') {
+  canonicalUrl = slug === 'about' ? '/' : `/${slug}`;
+} else {
+  canonicalUrl = slug === 'about' ? `/${lang}` : `/${lang}/${slug}`;
+}
+
+const templateMap: Record<string, any> = {
+  'about': null,
+  'done': null,
+  'doing-now': null,
+  'games': null,
+};
+
+const ComponentToRender = templateMap[slug] || PageTemplate;
+---
+
+<ComponentToRender lang={lang} slug={slug} canonical={canonicalUrl} />
