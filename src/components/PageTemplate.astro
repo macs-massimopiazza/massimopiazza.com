@@ -1,0 +1,28 @@
+---
+import { getEntry, render } from 'astro:content';
+const siteUrl = import.meta.env.SITE_URL;
+
+const { lang = 'it', slug, canonical } = Astro.props;
+const entryId = `${lang}/${slug}`;
+
+const entry = await getEntry('pages', entryId);
+
+if (!entry) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await render(entry);
+
+---
+<html>
+  <head>
+    <title>{entry.data.title}</title>
+    
+    {canonical && <link rel="canonical" href={`${siteUrl}${canonical}`} />}
+    
+  </head>
+  <body>
+    <h1>{entry.data.title}</h1>
+    <Content />
+  </body>
+</html>
