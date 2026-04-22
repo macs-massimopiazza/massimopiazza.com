@@ -1,20 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import mainPages from "../../config"
 const currentLocale = Astro.currentLocale || 'it'; 
-const mainPages = [
-  {
-    name: 'about',
-    path: '/'
-  },
-  {
-    name: 'doing-now',
-    path: '/doing-now'
-  },
-  {
-    name: 'done',
-    path: '/done'
-  },
-];
 ---
 
 <header style="display: flex; justify-content: space-between; padding: 20px; border: 1px solid red;">
