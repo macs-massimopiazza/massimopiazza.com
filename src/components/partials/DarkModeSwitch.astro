@@ -1,0 +1,53 @@
+---
+---
+
+<div class="switch-wrapper flex items-center gap-2">
+  <button id="theme-toggle" class="switch-container group">
+    <div class="switch-flag">
+      <span class="moon-icon">🌚</span>
+      <span class="sun-icon">🌞</span>
+    </div>
+  </button>
+</div>
+
+<style>
+  @reference "tailwindcss";
+  @reference "../../styles/global.css";
+
+  .switch-container {
+    height: var(--sl-height);
+    width: var(--sl-width);
+    border-radius: var(--sl-border-radius);
+    @apply border border-border relative box-border cursor-pointer flex items-center bg-bg-primary;
+  }
+
+  .moon-icon, .sun-icon {
+    @apply text-[1.2rem] relative bottom-[-2px];
+  }
+  .moon-icon { display: none; }
+  .sun-icon  { display: block; }
+
+  :global(.dark) .moon-icon { display: block; }
+  :global(.dark) .sun-icon  { display: none; }
+
+  :global(.dark) #theme-toggle .switch-flag {
+    transform: translateX(var(--sl-transformX));
+  }
+
+</style>
+
+<script>
+  const handleToggleClick = () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  };
+
+  const setupThemeToggle = () => {
+    const btn = document.getElementById('theme-toggle');
+    btn?.addEventListener('click', handleToggleClick);
+  };
+
+  setupThemeToggle();
+
+  document.addEventListener('astro:after-swap', setupThemeToggle);
+</script>

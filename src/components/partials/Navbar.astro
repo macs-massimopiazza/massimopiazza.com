@@ -35,3 +35,32 @@ const currentPath = pathname
     })}
   </ul>
 </nav>
+
+<style>
+  @reference "tailwindcss";
+  @reference "../../styles/global.css";
+  .nav-link {
+    @apply flex items-center h-full cursor-pointer relative;
+  }
+
+  .nav-link > a { @apply p-6 }
+  .nav-link:last-child { @apply border-r-0; }
+  
+  .nav-link .nav-indicator {
+    content: "";
+    @apply absolute bottom-[theme(spacing.6)] left-[theme(spacing.6)] h-[1px] bg-text-primary transition-all duration-500 ease-out w-0;
+  }
+
+  .nav-link::after {
+    content: "";
+    @apply absolute right-0 h-[calc(100%-theme(spacing.6)*2-5px)] w-[1px] bg-text-primary;
+  }
+  
+  .nav-link:last-child::after {
+    @apply hidden;
+  }
+
+  .nav-link.active .nav-indicator {
+    @apply w-[calc(100%-theme(spacing.6)*2)];
+  }
+</style>
