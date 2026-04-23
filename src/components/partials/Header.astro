@@ -1,15 +1,8 @@
 ---
-import { getRelativeLocaleUrl } from 'astro:i18n';
-import mainPages from "../../config"
-const currentLocale = Astro.currentLocale || 'it'; 
+import Navbar from './Navbar.astro';
+
 ---
 
-<header style="display: flex; justify-content: space-between; padding: 20px; border: 1px solid red;">
-  <span>lang switch + theme switch</span>
-  <nav>
-    <div class="menu-links">
-      {mainPages.map(page => <a href={getRelativeLocaleUrl(currentLocale, page.path)}>{page.name}</a>)}
-    </div>
-  </nav>
-  <span>orario</span>
+<header class="flex justify-center">
+  <Navbar />
 </header>
