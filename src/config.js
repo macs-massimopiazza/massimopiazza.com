@@ -1,14 +1,26 @@
 const mainPages = [
   {
-    name: 'about',
+    id: 'about',
+    label: {
+      it: "chi sono",
+      en: "about me"
+    },
     path: '/'
   },
   {
-    name: 'doing-now',
+    id: 'doing-now',
+    label: {
+      it: "cosa sto facendo",
+      en: "what I am doing"
+    },
     path: '/doing-now'
   },
   {
-    name: 'done',
+    id: 'done',
+    label: {
+      it: "cosa ho fatto",
+      en: "what I've done"
+    },
     path: '/done'
   },
 ];

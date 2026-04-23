@@ -1,0 +1,38 @@
+---
+import mainPages from "../../config";
+const { pathname } = Astro.url;
+import { getRelativeLocaleUrl } from 'astro:i18n';
+const currentLocale = (Astro.currentLocale as 'it' | 'en') ?? 'it';
+
+const currentPath = pathname
+  .replace(`/${currentLocale}`, "") 
+  .replace(/^\/|\/$/g, "");
+---
+
+<nav class="flex items-center h-full">
+  <div id="side-menu-toggle" class="hidden max-[895px]:block cursor-pointer">
+    <span>☰</span>
+  </div>
+
+  <ul class="links flex h-full list-none max-[895px]:hidden">
+    {mainPages.map((link) => {
+      const linkPath = link.path.replace(/^\/|\/$/g, "");
+      const isActive = currentPath === linkPath;
+
+      return (
+        <li id={link.id} class={`nav-link ${isActive ? "active" : ""}`}>
+          <a 
+            class="no-underline text-inherit border-none"
+            href={getRelativeLocaleUrl(currentLocale, link.path)}
+          >
+            {link.label[currentLocale]}
+          </a>
+        </li>
+      );
+    })}
+    <li id="contact" class="nav-link group">
+      <span class="px-6">contact :)</span>
+      <slot name="contact-modal" />
+    </li>
+  </ul>
+</nav>
