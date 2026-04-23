@@ -1,10 +1,16 @@
 ---
 import Navbar from './Navbar.astro';
 import ClockWidget from './ClockWidget.astro';
+import LangSwitch from './LangSwitch.astro';
+import DarkModeSwitch from './DarkModeSwitch.astro';
 
 ---
 
-<header class="flex justify-center">
+<header class="flex justify-between px-5">
+  <div class="flex gap-2">
+    <DarkModeSwitch />
+    <LangSwitch />
+  </div>
   <Navbar />
   <ClockWidget />
 </header>
