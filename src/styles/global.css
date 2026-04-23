@@ -10,8 +10,8 @@
     --color-accent: #e9e9e9;           
     
     /* Switch I18N */
-    --sl-width: 40px;
-    --sl-height: 26px;
+    --sl-width: 46px;
+    --sl-height: 23px;
     --sl-border-color: gray;
     --sl-border-radius: calc(var(--sl-height) / 2);
     --sl-flag-size: calc(var(--sl-height) - 6px);
@@ -51,52 +51,7 @@
 }
 
 @layer components {
-
-  .nav-link {
-    @apply flex items-center h-full cursor-pointer relative;
-  }
-
-  .nav-link > a { @apply p-6 }
-  .nav-link:last-child { @apply border-r-0; }
-  
-  .nav-link .nav-indicator {
-    content: "";
-    @apply absolute bottom-[theme(spacing.6)] left-[theme(spacing.6)] h-[1px] bg-text-primary transition-all duration-500 ease-out w-0;
-  }
-
-  .nav-link::after {
-    content: "";
-    @apply absolute right-0 h-[calc(100%-theme(spacing.6)*2-5px)] w-[1px] bg-text-primary;
-  }
-  
-  .nav-link:last-child::after {
-    @apply hidden;
-  }
-  
-  .nav-link.active .nav-indicator {
-    @apply w-[calc(100%-theme(spacing.6)*2)];
-  }
-
-  /* Switch Lingua */
-  .switch-container {
-    height: var(--sl-height);
-    width: var(--sl-width);
-    border-radius: var(--sl-border-radius);
-    @apply border border-border relative box-border cursor-pointer;
-  }
-
-  .switch-flag {
-    height: var(--sl-flag-size);
-    width: var(--sl-flag-size);
-    border-radius: var(--sl-border-radius);
-    @apply absolute top-[2px] left-[2px] transition-all duration-150 bg-cover;
-  }
-
-  .switch-flag.on {
-    @apply left-auto right-[2px];
-  }
-
-  /* --- ALTRI COMPONENTI GENERICI --- */
+  /* ALTRI COMPONENTI GENERICI */
   .modal-box {
     @apply top-[75%] left-[-25%] absolute py-4 px-7 border border-text-primary rounded-lg bg-bg-primary z-50 opacity-0 pointer-events-none transition-all duration-100 ease-out;
   }
