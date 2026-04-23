@@ -59,7 +59,7 @@
   .nav-link > a { @apply p-6 }
   .nav-link:last-child { @apply border-r-0; }
   
-  .nav-link::before {
+  .nav-link .nav-indicator {
     content: "";
     @apply absolute bottom-[theme(spacing.6)] left-[theme(spacing.6)] h-[1px] bg-text-primary transition-all duration-500 ease-out w-0;
   }
@@ -73,7 +73,7 @@
     @apply hidden;
   }
   
-  .nav-link.active::before {
+  .nav-link.active .nav-indicator {
     @apply w-[calc(100%-theme(spacing.6)*2)];
   }
 
