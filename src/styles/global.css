@@ -51,7 +51,6 @@
 }
 
 @layer components {
-  /* ALTRI COMPONENTI GENERICI */
   .modal-box {
     @apply top-[75%] left-[-25%] absolute py-4 px-7 border border-text-primary rounded-lg bg-bg-primary z-50 opacity-0 pointer-events-none transition-all duration-100 ease-out;
   }
