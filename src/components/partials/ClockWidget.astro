@@ -1,0 +1,49 @@
+<clock-widget class="flex items-center font-mono">
+  <span class="mr-1">⌚</span>
+  <span data-hours class="blink">00</span>:<span data-minutes class="blink">00</span>
+</clock-widget>
+
+<script>
+  class ClockWidget extends HTMLElement {
+    private hoursEl: HTMLElement | null;
+    private minutesEl: HTMLElement | null;
+    private timer: number | undefined;
+
+    constructor() {
+      super();
+      this.hoursEl = this.querySelector('[data-hours]');
+      this.minutesEl = this.querySelector('[data-minutes]');
+    }
+
+    connectedCallback() {
+      this.update();
+      this.timer = window.setInterval(() => this.update(), 20000);
+    }
+
+    disconnectedCallback() {
+      window.clearInterval(this.timer);
+    }
+
+    update() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+
+      if (this.hoursEl) this.hoursEl.textContent = h;
+      if (this.minutesEl) this.minutesEl.textContent = m;
+    }
+  }
+
+  if (!customElements.get('clock-widget')) {
+    customElements.define('clock-widget', ClockWidget);
+  }
+</script>
+
+<style>
+  .blink {
+    animation: blink-animation 5s steps(11, start) infinite;
+  }
+  @keyframes blink-animation {
+    to { visibility: hidden; }
+  }
+</style>
