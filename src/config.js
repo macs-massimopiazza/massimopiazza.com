@@ -23,6 +23,14 @@ const mainPages = [
     },
     path: '/done'
   },
+  {
+    id: 'contact',
+    label: {
+      it: "contatti :)",
+      en: "contacts :)"
+    },
+    path: '#'
+  },
 ];
 
 export default mainPages

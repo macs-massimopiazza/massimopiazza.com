@@ -1,4 +1,5 @@
 ---
+import ContactModal from "./ContactModal.astro";
 import mainPages from "../../config";
 const { pathname } = Astro.url;
 import { getRelativeLocaleUrl } from 'astro:i18n';
@@ -20,19 +21,16 @@ const currentPath = pathname
       const isActive = currentPath === linkPath;
 
       return (
-        <li id={link.id} class={`nav-link ${isActive ? "active" : ""}`}>
+        <li id={link.id} class={`nav-link ${isActive ? "active" : ""} ${link.id === 'contact' && "group"}`}>
           <a 
-            class="no-underline text-inherit border-none"
+            class={`no-underline text-inherit border-none`}
             href={getRelativeLocaleUrl(currentLocale, link.path)}
           >
             {link.label[currentLocale]}
           </a>
+          {link.id === 'contact' && <ContactModal />}
         </li>
       );
     })}
-    <li id="contact" class="nav-link group">
-      <span class="px-6">contact :)</span>
-      <slot name="contact-modal" />
-    </li>
   </ul>
 </nav>
