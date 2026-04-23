@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import it from '../../assets/flags/it.png';
+import en from '../../assets/flags/en.png';
+
+const currentLocale = (Astro.currentLocale as 'it' | 'en') ?? 'it';
+const isEn = currentLocale === 'en';
+const targetLocale = isEn ? 'it' : 'en';
+const { pathname } = Astro.url;
+const baseDefaultPath = pathname.replace(`/${currentLocale}`, '') || '/';
+const targetUrl = getRelativeLocaleUrl(targetLocale, baseDefaultPath);
+---
+
+<div class="switch-wrapper flex items-center gap-2">
+  <a 
+    href={targetUrl} 
+    class="switch-container group" 
+    title={`Passa a ${targetLocale}`}
+  >
+    <div class={`switch-flag ${isEn ? 'on' : ''}`}>
+      <Image 
+        src={isEn ? it : en} 
+        alt={isEn ? "Bandiera Italiana" : "English Flag"} 
+        width={40}
+        height={40}
+      />
+    </div>
+  </a>
+</div>
+
+<style>
+   @reference "tailwindcss";
+   @reference "../../styles/global.css";
+
+  .switch-container {
+    height: var(--sl-height);
+    width: var(--sl-width);
+    border-radius: var(--sl-border-radius);
+    @apply border border-border relative box-border cursor-pointer flex items-center bg-bg-primary;
+  }
+
+  .switch-flag {
+    height: var(--sl-flag-size);
+    width: var(--sl-flag-size);
+    @apply absolute top-[2px] left-[2px] transition-all duration-150 flex items-center justify-center;
+  }
+
+  .switch-flag.on {
+    @apply translate-x-[var(--sl-transformX)];
+  }
+</style>
