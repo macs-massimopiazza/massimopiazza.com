@@ -45,7 +45,9 @@ const { canonical, siteUrl, title, lang } = Astro.props;
   </head>
   <body>
     <Header />
-    <main transition:name="main-content" transition:animate={customSlideAnimation}>
+    <main 
+      transition:name="main-content" 
+      transition:animate={customSlideAnimation}>
       <slot />
     </main>
     <Footer />
