@@ -1,0 +1,57 @@
+---
+import mainPages from "../../config";
+
+const currentLocale = (Astro.currentLocale as 'it' | 'en') ?? 'it';
+const { pathname } = Astro.url;
+const currentPath = pathname.replace(`/${currentLocale}`, "").replace(/^\/|\/$/g, "");
+
+const currentPage = mainPages.find(p => p.path.replace(/^\/|\/$/g, "") === currentPath);
+const pageName = currentPage ? currentPage.label[currentLocale] : 'About';
+---
+
+<div id="price-tag-container" class="fixed top-0 right-[15%] z-[99] flex-col items-center hidden max-[895px]:flex pointer-events-none">
+  <div class="w-[1.5px] h-14 bg-text-primary opacity-70"></div>
+  <div class="relative bg-bg-primary border border-text-primary px-3 py-2 rounded-lg">
+    <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full border border-text-primary bg-bg-primary z-10"></div>
+    <span class="block text-[15px]" >
+      📄 {pageName}
+    </span>
+  </div>
+</div>
+
+<style>
+  @reference "tailwindcss";
+  @reference "../../styles/global.css";
+
+  #price-tag-container {
+    transform-origin: top center;
+  }
+
+  /* Animazione personalizzata: scende e dondola */
+  @keyframes dropAndSwing {
+    0% { transform: translateY(-100%) rotate(0deg); }
+    20% { transform: translateY(0) rotate(15deg); }
+    40% { transform: rotate(-10deg); }
+    60% { transform: rotate(5deg); }
+    80% { transform: rotate(-2deg); }
+    100% { transform: rotate(0deg); }
+  }
+
+  .animate-tag {
+    animation: dropAndSwing 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+</style>
+
+<script>
+  const playTagAnimation = () => {
+    const tag = document.getElementById('price-tag-container');
+    if (!tag) return;
+
+    tag.classList.remove('animate-tag');
+    void tag.offsetWidth; 
+    tag.classList.add('animate-tag');
+  };
+
+  playTagAnimation();
+  document.addEventListener('astro:after-swap', playTagAnimation);
+</script>
