@@ -21,23 +21,23 @@ const { canonical, siteUrl, title, lang } = Astro.props;
     <title>{title}</title>
     <ClientRouter />
     <script is:inline>
-      const theme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
-      })();
+      const setTheme = () => {
+        const theme = localStorage.getItem('theme') || 
+          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        const root = document.documentElement;
 
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+        if (theme === 'dark') {
+          root.classList.add('dark');
+        } else {
+          root.classList.remove('dark');
+        }
+        
+        root.dataset.theme = theme;
+      };
 
-      window.localStorage.setItem('theme', theme);
+      setTheme();
+      document.addEventListener('astro:after-swap', setTheme);
     </script>
   </head>
   <body>
