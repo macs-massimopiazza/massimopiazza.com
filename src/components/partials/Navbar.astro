@@ -1,7 +1,10 @@
 ---
 import ContactModal from "./ContactModal.astro";
-import mainPages from "../../config";
+import SideNavToggle from "./SideNavToggle.astro";
 import { getRelativeLocaleUrl } from 'astro:i18n';
+import mainPages from "../../config";
+
+
 const { pathname } = Astro.url;
 const currentLocale = (Astro.currentLocale as 'it' | 'en') ?? 'it';
 
@@ -11,9 +14,7 @@ const currentPath = pathname
 ---
 
 <nav class="flex items-center h-full">
-  <div id="side-menu-toggle" class="hidden max-[895px]:block cursor-pointer">
-    <span>☰</span>
-  </div>
+  <SideNavToggle />
 
   <ul class="links flex h-full list-none max-[895px]:hidden">
     {mainPages.map((link) => {
@@ -43,17 +44,17 @@ const currentPath = pathname
     @apply flex items-center h-full cursor-pointer relative;
   }
 
-  .nav-link > a { @apply p-6 }
+  .nav-link > a { @apply px-6 h-full flex items-center}
   .nav-link:last-child { @apply border-r-0; }
   
   .nav-link .nav-indicator {
     content: "";
-    @apply absolute bottom-[theme(spacing.6)] left-[theme(spacing.6)] h-[1px] bg-text-primary transition-all duration-500 ease-out w-0;
+    @apply absolute bottom-[theme(spacing.5)] left-[theme(spacing.6)] h-[1px] bg-text-primary transition-all duration-500 ease-out w-0;
   }
 
   .nav-link::after {
     content: "";
-    @apply absolute right-0 h-[calc(100%-theme(spacing.6)*2-5px)] w-[1px] bg-text-primary;
+    @apply absolute right-0 h-[calc(100%-theme(spacing.5)*2-5px)] w-[1px] bg-text-primary;
   }
   
   .nav-link:last-child::after {
