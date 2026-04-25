@@ -4,7 +4,7 @@ import hamburgerLight from '../../assets/icons/hamburger-menu.svg';
 import hamburgerDark from '../../assets/icons/hamburger-menu-dark.svg';
 ---
 
-<div id="side-menu-toggle" class="hidden max-[895px]:block cursor-pointer">
+<button id="side-nav-toggle" class="hidden max-[895px]:block cursor-pointer">
   <Image 
     src={hamburgerLight}
     alt={"Hamburger menu icon, apri sidebar"} 
@@ -19,4 +19,14 @@ import hamburgerDark from '../../assets/icons/hamburger-menu-dark.svg';
     height={30}
     class="hidden dark:block"
   />
-</div>
+</button>
+
+<script>
+  import { toggleSideNav } from '../../store.js';
+  
+  document.addEventListener('click', (e) => {
+    if (e.target instanceof Element && e.target.closest('#side-nav-toggle')) {
+      toggleSideNav();
+    }
+  });
+</script>

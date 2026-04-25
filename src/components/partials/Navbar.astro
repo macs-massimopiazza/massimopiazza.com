@@ -1,5 +1,6 @@
 ---
 import ContactModal from "./ContactModal.astro";
+import SideNav from "./SideNav.astro";
 import SideNavToggle from "./SideNavToggle.astro";
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import mainPages from "../../config";
@@ -15,6 +16,7 @@ const currentPath = pathname
 
 <nav class="flex items-center h-full">
   <SideNavToggle />
+  <SideNav />
 
   <ul class="links flex h-full list-none max-[895px]:hidden">
     {mainPages.map((link) => {

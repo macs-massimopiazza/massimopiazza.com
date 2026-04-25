@@ -32,11 +32,12 @@ const { canonical, siteUrl, title, lang } = Astro.props;
     </script>
 
     <script>
-      import { themeStore } from '../store.js';
+      import { themeStore, isSideNavOpen } from '../store.js';
       
       const syncStore = () => {
         const theme = document.documentElement.dataset.theme || 'light';
         themeStore.set(theme);
+        isSideNavOpen.set(false);
       };
 
       syncStore();
