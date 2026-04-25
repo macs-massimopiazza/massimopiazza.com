@@ -1,0 +1,74 @@
+---
+import mainPages from "../../config";
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Socials from "./Socials.astro";
+
+const currentLocale = (Astro.currentLocale as 'it' | 'en') ?? 'it';
+const { pathname } = Astro.url;
+const currentPath = pathname.replace(`/${currentLocale}`, "").replace(/^\/|\/$/g, "");
+---
+
+<div id="nav-overlay" class="fixed inset-0 bg-black/20 z-[9998] hidden"></div>
+
+<aside id="side-nav" class="rounded-e-lg fixed top-[30vh] left-0 z-[9999] w-fit h-fit bg-bg-primary border border-text-primary border-l-0 p-8 -translate-x-[110%] transition-transform duration-300 ease-out">
+  <button id="side-close" class="absolute top-2 right-4 text-2xl">×</button>
+  
+  <ul class="list-none p-0 m-0">
+    {mainPages.map((link) => {
+      const linkPath = link.path.replace(/^\/|\/$/g, "");
+      const isActive = currentPath === linkPath;
+      
+      if(link.id === 'contact') return;
+      return (
+        <li class="mb-2">
+          <a 
+            href={getRelativeLocaleUrl(currentLocale, link.path)}
+            class={`relative no-underline`}
+          >
+            {link.label[currentLocale]}
+            {isActive && <div class="absolute bottom-0 left-0 h-[1px] bg-text-primary w-full"></div>}
+          </a>
+        </li>
+      )
+    })}
+  </ul>
+
+  <div class="mt-6 pt-6 border-t border-text-primary">
+    <Socials />
+  </div>
+</aside>
+
+<script>
+  import { isSideNavOpen, closeSideNav } from '../../store';
+
+  const updateNavUI = (isOpen) => {
+    const nav = document.getElementById('side-nav');
+    const overlay = document.getElementById('nav-overlay');
+    
+    if (!nav || !overlay) return;
+
+    if (isOpen) {
+      nav.classList.remove('-translate-x-[110%]');
+      overlay.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    } else {
+      nav.classList.add('-translate-x-[110%]');
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  };
+
+  isSideNavOpen.subscribe((isOpen) => {
+    updateNavUI(isOpen);
+  });
+
+  const setupListeners = () => {
+    document.getElementById('nav-overlay')?.addEventListener('click', closeSideNav);
+    document.getElementById('side-close')?.addEventListener('click', closeSideNav);
+    
+    updateNavUI(isSideNavOpen.get());
+  };
+
+  setupListeners();
+  document.addEventListener('astro:after-swap', setupListeners);
+</script>

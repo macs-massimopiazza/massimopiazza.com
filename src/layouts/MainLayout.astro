@@ -5,6 +5,7 @@ import Footer from "../components/partials/Footer.astro";
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import customSlideAnimation from "../scripts/customSlideAnimation";
+import PageTag from "../components/partials/PageTag.astro";
 
 const { canonical, siteUrl, title, lang } = Astro.props;
 ---
@@ -21,28 +22,35 @@ const { canonical, siteUrl, title, lang } = Astro.props;
     <title>{title}</title>
     <ClientRouter />
     <script is:inline>
-      const setTheme = () => {
+      const applyTheme = () => {
         const theme = localStorage.getItem('theme') || 
           (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        
-        const root = document.documentElement;
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.dataset.theme = theme;
+      };
+      applyTheme();
+      document.addEventListener('astro:after-swap', applyTheme);
+    </script>
 
-        if (theme === 'dark') {
-          root.classList.add('dark');
-        } else {
-          root.classList.remove('dark');
-        }
-        
-        root.dataset.theme = theme;
+    <script>
+      import { themeStore, isSideNavOpen } from '../store.js';
+      
+      const syncStore = () => {
+        const theme = document.documentElement.dataset.theme || 'light';
+        themeStore.set(theme);
+        isSideNavOpen.set(false);
       };
 
-      setTheme();
-      document.addEventListener('astro:after-swap', setTheme);
+      syncStore();
+      document.addEventListener('astro:after-swap', syncStore);
     </script>
   </head>
   <body>
     <Header />
-    <main transition:name="main-content" transition:animate={customSlideAnimation}>
+    <main 
+      transition:name="main-content" 
+      transition:animate={customSlideAnimation}>
+      <PageTag />
       <slot />
     </main>
     <Footer />

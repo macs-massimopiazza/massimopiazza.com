@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import hamburgerLight from '../../assets/icons/hamburger-menu.svg';
+import hamburgerDark from '../../assets/icons/hamburger-menu-dark.svg';
+---
+
+<button id="side-nav-toggle" class="hidden max-[895px]:block cursor-pointer">
+  <Image 
+    src={hamburgerLight}
+    alt={"Hamburger menu icon, apri sidebar"} 
+    width={30}
+    height={30}
+    class="block dark:hidden"
+  />
+  <Image 
+    src={hamburgerDark}
+    alt={"Hamburger menu icon, apri sidebar"} 
+    width={30}
+    height={30}
+    class="hidden dark:block"
+  />
+</button>
+
+<script>
+  import { toggleSideNav } from '../../store.js';
+  
+  document.addEventListener('click', (e) => {
+    if (e.target instanceof Element && e.target.closest('#side-nav-toggle')) {
+      toggleSideNav();
+    }
+  });
+</script>
