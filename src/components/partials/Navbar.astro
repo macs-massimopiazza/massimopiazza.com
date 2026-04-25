@@ -24,7 +24,7 @@ const currentPath = pathname
         <li id={link.id} class={`nav-link ${isActive ? "active" : ""} ${link.id === 'contact' && "group"}`}>
           <div class="nav-indicator" transition:animate="initial"></div>
           <a 
-            class={`no-underline text-inherit border-none`}
+            class={`no-underline text-inherit border-none ${link.id === 'contact' && "pointer-events-none"}`}
             href={getRelativeLocaleUrl(currentLocale, link.path)}
           >
             {link.label[currentLocale]}
