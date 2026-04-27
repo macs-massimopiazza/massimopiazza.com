@@ -35,8 +35,8 @@ collections:
     fields:
       - { label: "Titolo Pagina", name: "title", widget: "string", i18n: true }
       
-      - { label: "Descrizione Colonna SX (Markdown)", name: "description_sx", widget: "markdown", i18n: true }
-      - { label: "Descrizione Colonna DX (Markdown)", name: "description_dx", widget: "markdown", i18n: true }
+      - { label: "Descrizione Colonna SX (Markdown)", name: "description_sx", widget: "markdown", i18n: true, required: false }
+      - { label: "Descrizione Colonna DX (Markdown)", name: "description_dx", widget: "markdown", i18n: true, required: false }
 
       - { label: "Titolo Colonna SX", name: "sx_title", widget: "string", i18n: true, required: false }
       - { label: "Titolo Colonna DX", name: "dx_title", widget: "string", i18n: true, required: false }
