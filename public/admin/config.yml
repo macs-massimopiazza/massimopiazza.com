@@ -15,7 +15,7 @@ collections:
   - name: "settings"
     label: "Impostazioni Sito"
     delete: false
-    i18n: true
+    i18n: false
     files:
       - name: "website"
         label: "Website Settings"
