@@ -1,0 +1,93 @@
+backend:
+  name: git-gateway
+  branch: develop
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+i18n:
+  structure: multiple_folders
+  locales: [it, en]
+  default_locale: it
+
+collections:
+  - name: "pages"
+    label: "Pagine Sito"
+    folder: "src/content/pages"
+    create: true
+    i18n: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titolo", name: "title", widget: "string", i18n: true }
+      
+      - label: "Esperienze Lavorative (Done / Doing Now)"
+        name: "works"
+        widget: "relation"
+        collection: "work_experiences"
+        search_fields: ["title", "company"]
+        value_field: "{{slug}}"
+        display_fields: ["title", " - ", "company"]
+        multiple: true
+        required: false
+        i18n: true
+
+      - label: "Progetti (Done / Doing Now)"
+        name: "projects"
+        widget: "relation"
+        collection: "projects"
+        search_fields: ["title"]
+        value_field: "{{slug}}"
+        display_fields: ["title"]
+        multiple: true
+        required: false
+        i18n: true
+
+      - label: "Formazione (Dove ho studiato)"
+        name: "education"
+        widget: "relation"
+        collection: "education"
+        search_fields: ["title", "school"]
+        value_field: "{{slug}}"
+        display_fields: ["title", " - ", "school"]
+        multiple: true
+        required: false
+        i18n: true
+
+      - { label: "Corpo della pagina (Testo libero)", name: "body", widget: "markdown", i18n: true, required: false }
+
+  - name: "work_experiences"
+    label: "Esperienze Lavorative"
+    folder: "src/content/works"
+    create: true
+    i18n: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Ruolo", name: "title", widget: "string", i18n: true }
+      - { label: "Azienda", name: "company", widget: "string", i18n: true }
+      - { label: "Periodo / Durata", name: "period", widget: "string", i18n: true, hint: "Es: da dicembre 2021 / 4 mesi (2021)" }
+      - { label: "Tipo di Lavoro", name: "type", widget: "select", options: ["Dipendente", "Freelance", "Tutor"], i18n: true }
+      - { label: "Descrizione Attività", name: "body", widget: "markdown", i18n: true }
+
+  - name: "projects"
+    label: "Progetti"
+    folder: "src/content/projects"
+    create: true
+    i18n: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Nome Progetto", name: "title", widget: "string", i18n: true }
+      - { label: "Stato", name: "status", widget: "select", options: ["Completato", "In corso", "Personale", "In Team"], i18n: true }
+      - { label: "Link Progetto", name: "url", widget: "string", required: false, i18n: true }
+      - { label: "Descrizione", name: "body", widget: "markdown", i18n: true }
+
+  - name: "education"
+    label: "Formazione"
+    folder: "src/content/education"
+    create: true
+    i18n: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titolo di Studio", name: "title", widget: "string", i18n: true }
+      - { label: "Istituto", name: "school", widget: "string", i18n: true }
+      - { label: "Anno", name: "year", widget: "string", i18n: true }
+      - { label: "Materie / Competenze", name: "body", widget: "markdown", required: false, i18n: true }
