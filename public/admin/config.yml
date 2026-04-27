@@ -1,6 +1,7 @@
 backend:
   name: git-gateway
   branch: develop
+  publish_mode: editorial_workflow
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
@@ -11,83 +12,108 @@ i18n:
   default_locale: it
 
 collections:
+  - name: "settings"
+    label: "Impostazioni Sito"
+    delete: false
+    i18n: true
+    files:
+      - name: "website"
+        label: "Website Settings"
+        file: "src/content/settings/website.json"
+        i18n: true
+        fields:
+          - { label: "Email di contatto", name: "contact_email", widget: "string", i18n: true }
+          - { label: "Link GitHub", name: "github_url", widget: "string", i18n: false }
+          - { label: "Link LinkedIn", name: "linkedin_url", widget: "string", i18n: false }
+
   - name: "pages"
-    label: "Pagine Sito"
+    label: "Pagine"
     folder: "src/content/pages"
     create: true
     i18n: true
     slug: "{{slug}}"
     fields:
-      - { label: "Titolo", name: "title", widget: "string", i18n: true }
+      - { label: "Titolo Pagina", name: "title", widget: "string", i18n: true }
       
-      - label: "Esperienze Lavorative (Done / Doing Now)"
+      - { label: "Descrizione Colonna SX (Markdown)", name: "description_sx", widget: "markdown", i18n: true }
+      - { label: "Descrizione Colonna DX (Markdown)", name: "description_dx", widget: "markdown", i18n: true }
+
+      - { label: "Titolo Colonna SX", name: "sx_title", widget: "string", i18n: true, required: false }
+      - { label: "Titolo Colonna DX", name: "dx_title", widget: "string", i18n: true, required: false }
+      - { label: "Titolo Sezione Esperienze", name: "works_title", widget: "string", i18n: true, required: false }
+      - { label: "Titolo Sezione Progetti", name: "projects_title", widget: "string", i18n: true, required: false }
+      - { label: "Titolo Sezione Formazione", name: "education_title", widget: "string", i18n: true, required: false }
+
+      - label: "Esperienze Lavorative"
         name: "works"
         widget: "relation"
         collection: "work_experiences"
         search_fields: ["title", "company"]
-        value_field: "{{slug}}"
-        display_fields: ["title", " - ", "company"]
+        value_field: "{{locale}}/{{slug}}"
+        display_fields: ["title", "company"]
         multiple: true
         required: false
         i18n: true
 
-      - label: "Progetti (Done / Doing Now)"
+      - label: "Progetti"
         name: "projects"
         widget: "relation"
         collection: "projects"
         search_fields: ["title"]
-        value_field: "{{slug}}"
+        value_field: "{{locale}}/{{slug}}"
         display_fields: ["title"]
         multiple: true
         required: false
         i18n: true
 
-      - label: "Formazione (Dove ho studiato)"
+      - label: "Formazione"
         name: "education"
         widget: "relation"
         collection: "education"
         search_fields: ["title", "school"]
-        value_field: "{{slug}}"
-        display_fields: ["title", " - ", "school"]
+        value_field: "{{locale}}/{{slug}}"
+        display_fields: ["title", "school"]
         multiple: true
         required: false
         i18n: true
-
-      - { label: "Corpo della pagina (Testo libero)", name: "body", widget: "markdown", i18n: true, required: false }
 
   - name: "work_experiences"
     label: "Esperienze Lavorative"
     folder: "src/content/works"
     create: true
     i18n: true
-    slug: "{{slug}}"
     fields:
       - { label: "Ruolo", name: "title", widget: "string", i18n: true }
       - { label: "Azienda", name: "company", widget: "string", i18n: true }
-      - { label: "Periodo / Durata", name: "period", widget: "string", i18n: true, hint: "Es: da dicembre 2021 / 4 mesi (2021)" }
-      - { label: "Tipo di Lavoro", name: "type", widget: "select", options: ["Dipendente", "Freelance", "Tutor"], i18n: true }
-      - { label: "Descrizione Attività", name: "body", widget: "markdown", i18n: true }
-
-  - name: "projects"
-    label: "Progetti"
-    folder: "src/content/projects"
-    create: true
-    i18n: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Nome Progetto", name: "title", widget: "string", i18n: true }
-      - { label: "Stato", name: "status", widget: "select", options: ["Completato", "In corso", "Personale", "In Team"], i18n: true }
-      - { label: "Link Progetto", name: "url", widget: "string", required: false, i18n: true }
-      - { label: "Descrizione", name: "body", widget: "markdown", i18n: true }
+      - { label: "Periodo", name: "period", widget: "string", i18n: true }
+      - { label: "Descrizione (Markdown)", name: "description", widget: "markdown", i18n: true }
 
   - name: "education"
     label: "Formazione"
     folder: "src/content/education"
     create: true
     i18n: true
-    slug: "{{slug}}"
     fields:
-      - { label: "Titolo di Studio", name: "title", widget: "string", i18n: true }
+      - { label: "Formazione", name: "title", widget: "string", i18n: true }
       - { label: "Istituto", name: "school", widget: "string", i18n: true }
-      - { label: "Anno", name: "year", widget: "string", i18n: true }
-      - { label: "Materie / Competenze", name: "body", widget: "markdown", required: false, i18n: true }
+      - { label: "Periodo", name: "period", widget: "string", i18n: true }
+      - { label: "Descrizione (Markdown)", name: "description", widget: "markdown", i18n: true }
+
+  - name: "projects"
+    label: "Progetti"
+    folder: "src/content/projects"
+    create: true
+    i18n: true
+    fields:
+      - { label: "Nome Progetto", name: "title", widget: "string", i18n: true }
+      - { label: "Status/Tag", name: "status", widget: "string", i18n: true }
+      
+      - label: "Links Progetto"
+        name: "links"
+        widget: "list"
+        i18n: true
+        fields:
+          - { label: "Testo del link", name: "label", widget: "string", i18n: true }
+          - { label: "URL", name: "url", widget: "string", i18n: false }
+          
+      - { label: "Descrizione (Markdown)", name: "description", widget: "markdown", i18n: true }
